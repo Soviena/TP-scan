@@ -22,6 +22,8 @@ def selectTP(url):
     r = scraper.parse_web(url)
     r = r.find('div', id='content').find('main', id='main')
     r = r.findAll('h2', class_="entry-title")
+    if len(r) == 0:
+        raise Exception('Not found')
     for i in range(len(r)):
         print('[{}] '.format(i)+r[i].find('a').text)
     x = int(input("Pilihan : "))
@@ -50,9 +52,12 @@ def menu():
         tpDetail(url)
     if x == 1:
         url = matkul()
-        url = selectTP(url)
-        print()
-        tpDetail(url)
+        try :
+            url = selectTP(url)
+            print()
+            tpDetail(url)
+        except:
+            print("Tp not found")
     if x == 2:
         exit()
 
